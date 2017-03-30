@@ -1,5 +1,6 @@
 package ws.tilda.anastasia.popularmovies.view.movie_grid;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -9,12 +10,18 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.presenter.MoviePresenter;
+import ws.tilda.anastasia.popularmovies.view.movie_detail.MovieDetailActivity;
 
 public class MovieGridFragment extends Fragment {
-    private RecyclerView mMovieRecyclerView;
+    @BindView(R.id.movie_recycler_view)
+    RecyclerView mMovieRecyclerView;
     private MoviePresenter mMoviePresenter;
+    Unbinder unbinder;
 
     public static MovieGridFragment newInstance() {
         return new MovieGridFragment();
@@ -31,7 +38,8 @@ public class MovieGridFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_movie_grid, container, false);
-        mMovieRecyclerView = (RecyclerView) v.findViewById(R.id.movie_recycler_view);
+
+        unbinder = ButterKnife.bind(this, v);
         mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
         mMoviePresenter = new MoviePresenter();
@@ -39,13 +47,21 @@ public class MovieGridFragment extends Fragment {
 
         setupAdapter();
 
-
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 
     private void setupAdapter() {
         if (isAdded()) {
-            mMovieRecyclerView.setAdapter(new MovieGridAdapter(mMoviePresenter.getMovieList()));
+            mMovieRecyclerView.setAdapter(new MovieGridAdapter(mMoviePresenter.getMovieList(), getContext()));
         }
     }
+
+
+
 }
