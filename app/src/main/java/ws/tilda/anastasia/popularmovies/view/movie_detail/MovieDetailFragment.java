@@ -44,13 +44,19 @@ public class MovieDetailFragment extends Fragment {
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
         if (savedInstanceState == null || !savedInstanceState.containsKey(MOVIE)) {
             mMovie = new Movie();
         } else {
             mMovie = savedInstanceState.getParcelable(MOVIE);
         }
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+         mMovie = getArguments().getParcelable(MOVIE);
     }
 
     @Nullable
@@ -59,8 +65,13 @@ public class MovieDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         unbinder = ButterKnife.bind(this, v);
-        Movie movie = getArguments().getParcelable(MOVIE);
 
+        updateUi(mMovie);
+
+        return v;
+    }
+
+    private void updateUi(Movie movie) {
         mMovieDetailTitle.setText(movie.getTitle());
         Glide.with(mMovieDetailPoster.getContext()).load(movie.getPosterPath())
                 .centerCrop()
@@ -68,8 +79,6 @@ public class MovieDetailFragment extends Fragment {
         mMovieDetailReleaseDate.setText(formatReleaseDateString(movie.getReleaseDate()));
         mMovieDetailRating.setText(String.format("%s/10", movie.getVoteAverage().toString()));
         mMovieDetailOverview.setText(movie.getOverview());
-
-        return v;
     }
 
     @Override
