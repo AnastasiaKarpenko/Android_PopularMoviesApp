@@ -14,7 +14,7 @@ public class MoviePresenter {
         mMovies = new ArrayList<>();
 
         Movie interstellar = new Movie();
-        interstellar.setPosterPath("http://image.tmdb.org/t/p/w185//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg");
+        interstellar.setPosterPath("http://image.tmdb.org/t/p/w500//nBNZadXqJSdt05SHLqgT0HuC5Gm.jpg");
         interstellar.setTitle("Interstellar");
         interstellar.setOverview("Interstellar chronicles the adventures of a group of explorers who make use of a newly discovered wormhole to surpass the limitations on human space travel and conquer the vast distances involved in an interstellar voyage.");
         interstellar.setVoteAverage(8.0);
@@ -23,7 +23,7 @@ public class MoviePresenter {
         mMovies.add(interstellar);
 
         Movie arrival = new Movie();
-        arrival.setPosterPath("http://image.tmdb.org/t/p/w185//yIZ1xendyqKvY3FGeeUYUd5X9Mm.jpg");
+        arrival.setPosterPath("http://image.tmdb.org/t/p/w500//yIZ1xendyqKvY3FGeeUYUd5X9Mm.jpg");
         arrival.setTitle("Arrival");
         arrival.setOverview("Taking place after alien crafts land around the world, an expert linguist is recruited by the military to determine whether they come in peace or are a threat.");
         arrival.setVoteAverage(6.9);
@@ -31,7 +31,7 @@ public class MoviePresenter {
         mMovies.add(arrival);
 
         Movie doctorStrange = new Movie();
-        doctorStrange.setPosterPath("http://image.tmdb.org/t/p/w185//tFI8VLMgSTTU38i8TIsklfqS9Nl.jpg");
+        doctorStrange.setPosterPath("http://image.tmdb.org/t/p/w500//tFI8VLMgSTTU38i8TIsklfqS9Nl.jpg");
         doctorStrange.setTitle("Doctor Strange");
         doctorStrange.setOverview("After his career is destroyed, a brilliant but arrogant surgeon gets a new lease on life when a sorcerer takes him under his wing and trains him to defend the world against evil.");
         doctorStrange.setVoteAverage(6.9);
@@ -39,7 +39,7 @@ public class MoviePresenter {
         mMovies.add(doctorStrange);
 
         Movie rings = new Movie();
-        rings.setPosterPath("http://image.tmdb.org/t/p/w185//biN2sqExViEh8IYSJrXlNKjpjxx.jpg");
+        rings.setPosterPath("http://image.tmdb.org/t/p/w500//biN2sqExViEh8IYSJrXlNKjpjxx.jpg");
         rings.setTitle("Rings");
         rings.setOverview("Julia becomes worried about her boyfriend, Holt when he explores the dark urban legend of a mysterious videotape said to kill the watcher seven days after viewing. She sacrifices herself to save her boyfriend and in doing so makes a horrifying discovery: there is a movie within the movie that no one has ever seen before.");
         rings.setVoteAverage(4.7);

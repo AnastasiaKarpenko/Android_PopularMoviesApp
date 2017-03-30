@@ -20,11 +20,17 @@ import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
 
 public class MovieDetailFragment extends Fragment {
     public static final String MOVIE = "movie";
-    @BindView(R.id.detail_movie_title) TextView mMovieDetailTitle;
-    @BindView(R.id.detail_movie_poster) ImageView mMovieDetailPoster;
-    @BindView(R.id.detail_release_date) TextView mMovieDetailReleaseDate;
-    @BindView(R.id.detail_movie_raiting) TextView mMovieDetailRating;
-    @BindView(R.id.detail_movie_overview) TextView mMovieDetailOverview;
+    private Movie mMovie;
+    @BindView(R.id.detail_movie_title)
+    TextView mMovieDetailTitle;
+    @BindView(R.id.detail_movie_poster)
+    ImageView mMovieDetailPoster;
+    @BindView(R.id.detail_release_date)
+    TextView mMovieDetailReleaseDate;
+    @BindView(R.id.detail_movie_raiting)
+    TextView mMovieDetailRating;
+    @BindView(R.id.detail_movie_overview)
+    TextView mMovieDetailOverview;
     Unbinder unbinder;
 
     public static MovieDetailFragment newInstance(Movie movie) {
@@ -37,10 +43,21 @@ public class MovieDetailFragment extends Fragment {
         return movieDetailFragment;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (savedInstanceState == null || !savedInstanceState.containsKey(MOVIE)) {
+            mMovie = new Movie();
+        } else {
+            mMovie = savedInstanceState.getParcelable(MOVIE);
+        }
+    }
+
     @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View v = inflater.inflate(R.layout.fragment_movie_detail,container,false);
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container,
+                             @Nullable Bundle savedInstanceState) {
+        View v = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         unbinder = ButterKnife.bind(this, v);
         Movie movie = getArguments().getParcelable(MOVIE);
 
@@ -48,8 +65,8 @@ public class MovieDetailFragment extends Fragment {
         Glide.with(mMovieDetailPoster.getContext()).load(movie.getPosterPath())
                 .centerCrop()
                 .into(mMovieDetailPoster);
-        mMovieDetailReleaseDate.setText(movie.getReleaseDate());
-        mMovieDetailRating.setText(movie.getVoteAverage().toString());
+        mMovieDetailReleaseDate.setText(formatReleaseDateString(movie.getReleaseDate()));
+        mMovieDetailRating.setText(String.format("%s/10", movie.getVoteAverage().toString()));
         mMovieDetailOverview.setText(movie.getOverview());
 
         return v;
@@ -60,4 +77,19 @@ public class MovieDetailFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
+
+    private String formatReleaseDateString(String string) {
+        String year = "";
+        for (int i = 0; i < 4; i++) {
+            year += string.charAt(i);
+        }
+        return year;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(MOVIE, mMovie);
+        super.onSaveInstanceState(outState);
+    }
+
 }
