@@ -2,6 +2,7 @@ package ws.tilda.anastasia.popularmovies.view.movie_grid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.TypedArray;
 import android.support.v7.widget.RecyclerView;
 import android.view.Display;
 import android.view.LayoutInflater;
@@ -20,6 +21,8 @@ import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
 import ws.tilda.anastasia.popularmovies.presenter.MoviePresenter;
 import ws.tilda.anastasia.popularmovies.view.movie_detail.MovieDetailActivity;
+
+import static java.security.AccessController.getContext;
 
 
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MovieViewHolder> {
@@ -74,14 +77,23 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
             WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
             Display display = wm.getDefaultDisplay();
 
+            int toolbarHeight = getToolBarHeight();
             int displayHeight = display.getHeight();
-            int viewHeight = displayHeight / 2;
+            int viewHeight = (displayHeight - toolbarHeight) / 2;
 
             ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
             layoutParams.height = viewHeight;
 
             view.setLayoutParams(layoutParams);
 
+        }
+
+        public int getToolBarHeight() {
+            int[] attrs = new int[] {R.attr.actionBarSize};
+            TypedArray typedArray = itemView.getContext().obtainStyledAttributes(attrs);
+            int toolBarHeight = typedArray.getDimensionPixelSize(0, -1);
+            typedArray.recycle();
+            return toolBarHeight;
         }
     }
     private void starMovieDetailActivity(View view, int index) {
