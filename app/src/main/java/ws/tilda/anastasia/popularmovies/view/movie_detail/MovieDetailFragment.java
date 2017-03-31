@@ -20,6 +20,7 @@ import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
 
 public class MovieDetailFragment extends Fragment {
     public static final String MOVIE = "movie";
+    public static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w185/";
     private Movie mMovie;
     @BindView(R.id.detail_movie_title)
     TextView mMovieDetailTitle;
@@ -73,7 +74,7 @@ public class MovieDetailFragment extends Fragment {
 
     private void updateUi(Movie movie) {
         mMovieDetailTitle.setText(movie.getTitle());
-        Glide.with(mMovieDetailPoster.getContext()).load(movie.getPosterPath())
+        Glide.with(mMovieDetailPoster.getContext()).load(IMAGE_PATH + movie.getPosterPath())
                 .centerCrop()
                 .into(mMovieDetailPoster);
         mMovieDetailReleaseDate.setText(formatReleaseDateString(movie.getReleaseDate()));

@@ -19,17 +19,14 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
-import ws.tilda.anastasia.popularmovies.presenter.MoviePresenter;
 import ws.tilda.anastasia.popularmovies.view.movie_detail.MovieDetailActivity;
-
-import static java.security.AccessController.getContext;
 
 
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MovieViewHolder> {
 
     private List<Movie> mMovies;
     private Context context;
-    private MoviePresenter mMoviePresenter= new MoviePresenter();
+    private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w185/";
 
     public MovieGridAdapter(List<Movie> movies, Context context) {
         mMovies = movies;
@@ -38,15 +35,15 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     @Override
     public MovieViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_movie_grid, parent, false);
-        MovieViewHolder movieViewHolder = new MovieViewHolder(view);
-        return movieViewHolder;
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.item_movie_grid, parent, false);
+        return new MovieViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final MovieViewHolder holder, int position) {
-        Movie movie = mMoviePresenter.getMovieList().get(position);
-        Glide.with(holder.mMoviePosterImageView.getContext()).load(movie.getPosterPath())
+        Movie movie = mMovies.get(position);
+        Glide.with(holder.mMoviePosterImageView.getContext()).load(IMAGE_PATH + movie.getPosterPath())
                 .centerCrop()
                 .into(holder.mMoviePosterImageView);
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -59,11 +56,12 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     @Override
     public int getItemCount() {
-        return mMoviePresenter.getMovieList().size();
+        return mMovies.size();
     }
 
-    public  class MovieViewHolder extends RecyclerView.ViewHolder {
-        @BindView(R.id.movie_poster) ImageView mMoviePosterImageView;
+    public class MovieViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.movie_poster)
+        ImageView mMoviePosterImageView;
 
         public MovieViewHolder(View itemView) {
             super(itemView);
@@ -89,17 +87,23 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         }
 
         public int getToolBarHeight() {
-            int[] attrs = new int[] {R.attr.actionBarSize};
+            int[] attrs = new int[]{R.attr.actionBarSize};
             TypedArray typedArray = itemView.getContext().obtainStyledAttributes(attrs);
             int toolBarHeight = typedArray.getDimensionPixelSize(0, -1);
             typedArray.recycle();
             return toolBarHeight;
         }
     }
+
     private void starMovieDetailActivity(View view, int index) {
         Intent intent = new Intent(view.getContext(), MovieDetailActivity.class);
-        intent.putExtra(MovieDetailActivity.MOVIE, mMoviePresenter.getMovieList().get(index));
+        intent.putExtra(MovieDetailActivity.MOVIE, mMovies.get(index));
         view.getContext().startActivity(intent);
+    }
+
+    public void updateMovies(List<Movie> movies) {
+        mMovies = movies;
+        notifyDataSetChanged();
     }
 
 
