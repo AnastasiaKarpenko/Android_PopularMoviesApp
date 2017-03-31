@@ -35,7 +35,7 @@ public class MovieApi {
 
     public interface MovieService {
         @GET("discover/movie?api_key=" + APIKEY)
-        Call<Response> getMovies();
+        Call<Response> getDefaultMovieList();
 
         @GET("movie/{criteria}?api_key=" + APIKEY)
         Call<Response> sortMoviesByCriteria(@Path ("criteria") String string);
