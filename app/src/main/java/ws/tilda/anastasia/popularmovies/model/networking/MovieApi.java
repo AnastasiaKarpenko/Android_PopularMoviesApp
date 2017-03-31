@@ -11,7 +11,7 @@ import ws.tilda.anastasia.popularmovies.model.model_objects.Response;
 
 public class MovieApi {
     private static final String APIKEY = "putYourApiKey";
-    private static final String APIPATH = " https://api.themoviedb.org/3/";
+    private static final String APIPATH = "https://api.themoviedb.org/3/";
     private static OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder();
 
     private static void getLogger() {
