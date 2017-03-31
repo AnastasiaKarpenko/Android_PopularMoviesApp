@@ -53,22 +53,18 @@ public class MovieGridFragment extends Fragment {
         unbinder = ButterKnife.bind(this, v);
         mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        Call<Response> call = makeCallToDefaultMovieList();
+        Call<Response> call = makeCallToGetDefaultMovieList();
         showMovies(call);
 
         return v;
     }
 
-    private Call<Response> makeCallToDefaultMovieList() {
+    private Call<Response> makeCallToGetDefaultMovieList() {
         return MovieApi.provideMovieService().getMovies();
     }
 
-    private Call<Response> makeCallToPopularMovieList() {
-        return MovieApi.provideMovieService().sortMoviesByCriteria("popular");
-    }
-
-    private Call<Response> makeCallToTopRatedMovieList() {
-        return MovieApi.provideMovieService().sortMoviesByCriteria("top_rated");
+    private Call<Response> makeCallToGetMoviesSortedBy(String string) {
+        return MovieApi.provideMovieService().sortMoviesByCriteria(string);
     }
 
     private void showMovies(Call<Response> call) {
@@ -110,13 +106,15 @@ public class MovieGridFragment extends Fragment {
         switch (item.getItemId()) {
             case R.id.most_popular:
                 // write code here
-                Call<Response> call = makeCallToPopularMovieList();
+                Call<Response> call = makeCallToGetMoviesSortedBy("popular");
                 showMovies(call);
+                Toast.makeText(getContext(), "Most popular movies", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.top_rated:
                 // write code here
-                call = makeCallToTopRatedMovieList();
+                call = makeCallToGetMoviesSortedBy("top_rated");
                 showMovies(call);
+                Toast.makeText(getContext(), "Top rated movies", Toast.LENGTH_SHORT).show();
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
