@@ -56,7 +56,11 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     @Override
     public int getItemCount() {
-        return mMovies.size();
+        if (mMovies.size() != 0) {
+            return mMovies.size();
+        } else {
+            return 0;
+        }
     }
 
     public class MovieViewHolder extends RecyclerView.ViewHolder {
@@ -101,10 +105,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         view.getContext().startActivity(intent);
     }
 
-    public void updateMovies(List<Movie> movies) {
-        mMovies = movies;
-        notifyDataSetChanged();
-    }
+
 
 
 }

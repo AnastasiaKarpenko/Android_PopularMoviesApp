@@ -1,6 +1,7 @@
 package ws.tilda.anastasia.popularmovies.view.movie_grid;
 
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
@@ -13,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
@@ -26,7 +28,10 @@ import ws.tilda.anastasia.popularmovies.model.model_objects.Response;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
 
+
 public class MovieGridFragment extends Fragment {
+    public static final String MOVIES = "movies";
+
     private List<Movie> mMovies;
 
     @BindView(R.id.movie_recycler_view)
@@ -41,6 +46,16 @@ public class MovieGridFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
+        setRetainInstance(true);
+
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if(savedInstanceState != null) {
+            mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
+        }
     }
 
     @Nullable
@@ -53,10 +68,21 @@ public class MovieGridFragment extends Fragment {
         unbinder = ButterKnife.bind(this, v);
         mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
+        if(savedInstanceState != null) {
+            mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
+        }
+
         Call<Response> call = makeCallToGetDefaultMovieList();
         showMovies(call);
 
+
+
         return v;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     private Call<Response> makeCallToGetDefaultMovieList() {
@@ -71,8 +97,13 @@ public class MovieGridFragment extends Fragment {
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                mMovies = response.body().getMovies();
-                setupAdapter(mMovies);
+                if(response.isSuccessful()) {
+                    mMovies = response.body().getMovies();
+                }
+
+                if (mMovies != null) {
+                    setupAdapter(mMovies);
+                }
             }
 
             @Override
@@ -119,6 +150,12 @@ public class MovieGridFragment extends Fragment {
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(MOVIES, (ArrayList<? extends Parcelable>) mMovies);
+        super.onSaveInstanceState(outState);
     }
 
 
