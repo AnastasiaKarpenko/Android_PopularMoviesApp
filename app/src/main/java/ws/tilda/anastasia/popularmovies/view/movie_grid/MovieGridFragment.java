@@ -28,7 +28,6 @@ import ws.tilda.anastasia.popularmovies.model.model_objects.Response;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
 
-
 public class MovieGridFragment extends Fragment {
     public static final String MOVIES = "movies";
 
@@ -46,16 +45,6 @@ public class MovieGridFragment extends Fragment {
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setHasOptionsMenu(true);
-        setRetainInstance(true);
-
-    }
-
-    @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        if(savedInstanceState != null) {
-            mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
-        }
     }
 
     @Nullable
@@ -68,25 +57,19 @@ public class MovieGridFragment extends Fragment {
         unbinder = ButterKnife.bind(this, v);
         mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
 
-        if(savedInstanceState != null) {
+        if (savedInstanceState != null) {
             mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
+            setupAdapter(mMovies);
+        } else {
+            Call<Response> call = makeCallToGetDefaultMovieList();
+            showMovies(call);
         }
-
-        Call<Response> call = makeCallToGetDefaultMovieList();
-        showMovies(call);
-
-
 
         return v;
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
     private Call<Response> makeCallToGetDefaultMovieList() {
-        return MovieApi.provideMovieService().getMovies();
+        return MovieApi.provideMovieService().getDefaultMovieList();
     }
 
     private Call<Response> makeCallToGetMoviesSortedBy(String string) {
@@ -97,7 +80,7 @@ public class MovieGridFragment extends Fragment {
         call.enqueue(new Callback<Response>() {
             @Override
             public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     mMovies = response.body().getMovies();
                 }
 
@@ -136,13 +119,11 @@ public class MovieGridFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.most_popular:
-                // write code here
                 Call<Response> call = makeCallToGetMoviesSortedBy("popular");
                 showMovies(call);
                 Toast.makeText(getContext(), "Most popular movies", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.top_rated:
-                // write code here
                 call = makeCallToGetMoviesSortedBy("top_rated");
                 showMovies(call);
                 Toast.makeText(getContext(), "Top rated movies", Toast.LENGTH_SHORT).show();
@@ -157,6 +138,4 @@ public class MovieGridFragment extends Fragment {
         outState.putParcelableArrayList(MOVIES, (ArrayList<? extends Parcelable>) mMovies);
         super.onSaveInstanceState(outState);
     }
-
-
 }
