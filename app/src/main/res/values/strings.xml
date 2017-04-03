@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Popular Movies</string>
+    <string name="app_name" translatable="false">Popular Movies</string>
     <string name="content_description_movie_poster">Movie Poster</string>
     <string name="movie_rating_description">%1$d/10</string>
     <string name="show_most_popular">show most popular</string>
