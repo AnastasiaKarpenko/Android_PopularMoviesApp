@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.movie_grid;
+package ws.tilda.anastasia.popularmovies.view.moviegrid;
 
 import android.content.Context;
 import android.content.Intent;
@@ -18,8 +18,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import ws.tilda.anastasia.popularmovies.R;
-import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
-import ws.tilda.anastasia.popularmovies.view.movie_detail.MovieDetailActivity;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
+import ws.tilda.anastasia.popularmovies.view.moviedetail.MovieDetailActivity;
 
 
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MovieViewHolder> {

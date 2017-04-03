@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.movie_detail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,7 +15,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import ws.tilda.anastasia.popularmovies.R;
-import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
 
 
 public class MovieDetailFragment extends Fragment {

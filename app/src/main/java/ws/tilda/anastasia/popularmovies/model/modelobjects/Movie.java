@@ -1,5 +1,5 @@
 
-package ws.tilda.anastasia.popularmovies.model.model_objects;
+package ws.tilda.anastasia.popularmovies.model.modelobjects;
 
 import android.os.Parcel;
 import android.os.Parcelable;

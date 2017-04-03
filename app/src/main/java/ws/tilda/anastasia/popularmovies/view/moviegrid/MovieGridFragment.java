@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.movie_grid;
+package ws.tilda.anastasia.popularmovies.view.moviegrid;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -26,8 +26,8 @@ import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
 import ws.tilda.anastasia.popularmovies.R;
-import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
-import ws.tilda.anastasia.popularmovies.model.model_objects.Response;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Response;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
 

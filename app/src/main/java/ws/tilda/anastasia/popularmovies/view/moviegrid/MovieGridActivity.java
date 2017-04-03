@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.movie_grid;
+package ws.tilda.anastasia.popularmovies.view.moviegrid;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;

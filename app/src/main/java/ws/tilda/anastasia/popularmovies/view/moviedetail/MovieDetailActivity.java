@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.movie_detail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -6,7 +6,7 @@ import android.view.MenuItem;
 
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.SingleFragmentActivity;
-import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
 
 public class MovieDetailActivity extends SingleFragmentActivity {
 

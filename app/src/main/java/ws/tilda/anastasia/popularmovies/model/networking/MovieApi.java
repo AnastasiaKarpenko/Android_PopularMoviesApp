@@ -7,7 +7,7 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
-import ws.tilda.anastasia.popularmovies.model.model_objects.Response;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Response;
 
 public class MovieApi {
     private static final String APIKEY = "putYourApiKey";
