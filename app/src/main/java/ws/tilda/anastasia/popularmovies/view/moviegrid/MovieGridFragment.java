@@ -9,6 +9,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -33,9 +34,10 @@ import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
 public class MovieGridFragment extends Fragment {
     public static final String MOVIES = "movies";
-    public static final int SPAN_COUNT = 2;
     public static final String POPULAR = "popular";
     public static final String TOP_RATED = "top_rated";
+    public static final int WIDTH_DIVIDER = 400;
+    public static final int MIN_COLUMN_NUMBER = 2;
 
     private List<Movie> mMovies;
 
@@ -62,7 +64,7 @@ public class MovieGridFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_movie_grid, container, false);
         unbinder = ButterKnife.bind(this, v);
 
-        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), SPAN_COUNT));
+        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), numberOfColumns()));
 
         if (savedInstanceState != null) {
             reloadIfThereAreNoMovies(savedInstanceState);
@@ -162,6 +164,18 @@ public class MovieGridFragment extends Fragment {
                 Toast.makeText(getContext(), R.string.could_not_load_movies, Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private int numberOfColumns() {
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
+        int widthDivider = WIDTH_DIVIDER;
+        int width = displayMetrics.widthPixels;
+        int nColumns = width / widthDivider;
+        if (nColumns < MIN_COLUMN_NUMBER) {
+            return MIN_COLUMN_NUMBER;
+        }
+        return nColumns;
     }
 
     private void setupAdapter(List<Movie> movies) {
