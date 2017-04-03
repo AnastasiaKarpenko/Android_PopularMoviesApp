@@ -65,7 +65,7 @@ public class MovieGridFragment extends Fragment {
         mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), SPAN_COUNT));
 
         if (savedInstanceState != null) {
-            loadIfThereAreNoMovies(savedInstanceState);
+            reloadIfThereAreNoMovies(savedInstanceState);
         } else {
             updateUI();
         }
@@ -110,12 +110,12 @@ public class MovieGridFragment extends Fragment {
     }
 
 
-    private void loadIfThereAreNoMovies(@Nullable Bundle savedInstanceState) {
-        if(savedInstanceState.getParcelableArrayList(MOVIES) != null) {
+    private void reloadIfThereAreNoMovies(@Nullable Bundle savedInstanceState) {
+        if(savedInstanceState.getParcelableArrayList(MOVIES) == null) {
+            updateUI();
+        } else {
             mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
             setupAdapter(mMovies);
-        } else {
-            updateUI();
         }
     }
 
