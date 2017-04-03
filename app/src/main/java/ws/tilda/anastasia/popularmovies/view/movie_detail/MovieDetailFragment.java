@@ -21,7 +21,10 @@ import ws.tilda.anastasia.popularmovies.model.model_objects.Movie;
 public class MovieDetailFragment extends Fragment {
     public static final String MOVIE = "movie";
     public static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w185/";
+    public static final int NUMBER_DIGITS_YEAR = 4;
+
     private Movie mMovie;
+
     @BindView(R.id.detail_movie_title)
     TextView mMovieDetailTitle;
     @BindView(R.id.detail_movie_poster)
@@ -32,7 +35,9 @@ public class MovieDetailFragment extends Fragment {
     TextView mMovieDetailRating;
     @BindView(R.id.detail_movie_overview)
     TextView mMovieDetailOverview;
+
     Unbinder unbinder;
+
 
     public static MovieDetailFragment newInstance(Movie movie) {
         Bundle args = new Bundle();
@@ -72,6 +77,18 @@ public class MovieDetailFragment extends Fragment {
         return v;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelable(MOVIE, mMovie);
+        super.onSaveInstanceState(outState);
+    }
+
     private void updateUi(Movie movie) {
         mMovieDetailTitle.setText(movie.getTitle());
         Glide.with(mMovieDetailPoster.getContext()).load(IMAGE_PATH + movie.getPosterPath())
@@ -82,24 +99,13 @@ public class MovieDetailFragment extends Fragment {
         mMovieDetailOverview.setText(movie.getOverview());
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     private String formatReleaseDateString(String string) {
         String year = "";
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < NUMBER_DIGITS_YEAR; i++) {
             year += string.charAt(i);
         }
         return year;
-    }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelable(MOVIE, mMovie);
-        super.onSaveInstanceState(outState);
     }
 
 }

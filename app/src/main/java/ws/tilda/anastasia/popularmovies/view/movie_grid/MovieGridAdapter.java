@@ -24,6 +24,7 @@ import ws.tilda.anastasia.popularmovies.view.movie_detail.MovieDetailActivity;
 
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MovieViewHolder> {
 
+    public static final int NUMBER_OF_VIEWS = 2;
     private List<Movie> mMovies;
     private Context context;
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w185/";
@@ -81,7 +82,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
             int toolbarHeight = getToolBarHeight();
             int displayHeight = display.getHeight();
-            int viewHeight = (displayHeight - toolbarHeight) / 2;
+            int viewHeight = (displayHeight - toolbarHeight) / NUMBER_OF_VIEWS;
 
             ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
             layoutParams.height = viewHeight;

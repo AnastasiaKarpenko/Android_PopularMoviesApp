@@ -30,11 +30,15 @@ import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
 public class MovieGridFragment extends Fragment {
     public static final String MOVIES = "movies";
+    public static final int SPAN_COUNT = 2;
+    public static final String POPULAR = "popular";
+    public static final String TOP_RATED = "top_rated";
 
     private List<Movie> mMovies;
 
     @BindView(R.id.movie_recycler_view)
     RecyclerView mMovieRecyclerView;
+
     Unbinder unbinder;
 
     public static MovieGridFragment newInstance() {
@@ -53,9 +57,9 @@ public class MovieGridFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         View v = inflater.inflate(R.layout.fragment_movie_grid, container, false);
-
         unbinder = ButterKnife.bind(this, v);
-        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+
+        mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), SPAN_COUNT));
 
         if (savedInstanceState != null) {
             mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
@@ -66,6 +70,42 @@ public class MovieGridFragment extends Fragment {
         }
 
         return v;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        super.onCreateOptionsMenu(menu, inflater);
+        inflater.inflate(R.menu.fragment_movie_grid, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.most_popular:
+                Call<Response> call = makeCallToGetMoviesSortedBy(POPULAR);
+                showMovies(call);
+                Toast.makeText(getContext(), R.string.most_popular_movies, Toast.LENGTH_SHORT).show();
+                return true;
+            case R.id.top_rated:
+                call = makeCallToGetMoviesSortedBy(TOP_RATED);
+                showMovies(call);
+                Toast.makeText(getContext(), R.string.top_rated_movies, Toast.LENGTH_SHORT).show();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState.putParcelableArrayList(MOVIES, (ArrayList<? extends Parcelable>) mMovies);
+        super.onSaveInstanceState(outState);
     }
 
     private Call<Response> makeCallToGetDefaultMovieList() {
@@ -96,46 +136,9 @@ public class MovieGridFragment extends Fragment {
         });
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
-    }
-
     private void setupAdapter(List<Movie> movies) {
         if (isAdded()) {
-            mMovieRecyclerView.setAdapter(new MovieGridAdapter(movies,
-                    getContext()));
+            mMovieRecyclerView.setAdapter(new MovieGridAdapter(movies, getContext()));
         }
-    }
-
-    @Override
-    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        inflater.inflate(R.menu.fragment_movie_grid, menu);
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.most_popular:
-                Call<Response> call = makeCallToGetMoviesSortedBy("popular");
-                showMovies(call);
-                Toast.makeText(getContext(), "Most popular movies", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.top_rated:
-                call = makeCallToGetMoviesSortedBy("top_rated");
-                showMovies(call);
-                Toast.makeText(getContext(), "Top rated movies", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(MOVIES, (ArrayList<? extends Parcelable>) mMovies);
-        super.onSaveInstanceState(outState);
     }
 }

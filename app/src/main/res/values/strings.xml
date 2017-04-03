@@ -4,4 +4,7 @@
     <string name="movie_rating_description">%1$d/10</string>
     <string name="show_most_popular">show most popular</string>
     <string name="show_top_rated">show top rated</string>
+    <string name="most_popular_movies">Most popular movies</string>
+    <string name="top_rated_movies">Top rated movies</string>
+    <string name="movie_details_toolbar">Movie Details</string>
 </resources>

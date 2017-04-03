@@ -12,6 +12,16 @@ public class MovieDetailActivity extends SingleFragmentActivity {
 
     public static final String MOVIE = "movie";
 
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case android.R.id.home:
+                finish();
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     protected Fragment createFragment() {
         Movie movie = getIntent()
                 .getParcelableExtra(MOVIE);
@@ -24,23 +34,7 @@ public class MovieDetailActivity extends SingleFragmentActivity {
         setContentView(R.layout.activity_single_fragment);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setTitle("Movie Details");
-
+        getSupportActionBar().setTitle(R.string.movie_details_toolbar);
     }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case android.R.id.home:
-                finish();
-                return true;
-
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-//    public void onSaveInstanceState(Bundle outState) {
-//        getSupportFragmentManager().putFragment(outState, "MovieDetailFragment", mFragment);
-//    }
 
 }
