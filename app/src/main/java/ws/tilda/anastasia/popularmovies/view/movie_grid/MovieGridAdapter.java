@@ -57,7 +57,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     @Override
     public int getItemCount() {
-        if (mMovies.size() != 0) {
+        if (mMovies != null) {
             return mMovies.size();
         } else {
             return 0;
