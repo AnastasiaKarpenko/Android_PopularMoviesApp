@@ -65,16 +65,9 @@ public class MovieGridFragment extends Fragment {
         mMovieRecyclerView.setLayoutManager(new GridLayoutManager(getActivity(), SPAN_COUNT));
 
         if (savedInstanceState != null) {
-            mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
-            setupAdapter(mMovies);
+            loadIfThereAreNoMovies(savedInstanceState);
         } else {
-            if(isOnline()) {
-                Call<Response> call = makeCallToGetDefaultMovieList();
-                showMovies(call);
-            } else {
-                Toast.makeText(getContext(), R.string.no_network_connection, Toast.LENGTH_SHORT)
-                        .show();
-            }
+            updateUI();
         }
 
         return v;
@@ -114,6 +107,26 @@ public class MovieGridFragment extends Fragment {
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(MOVIES, (ArrayList<? extends Parcelable>) mMovies);
         super.onSaveInstanceState(outState);
+    }
+
+
+    private void loadIfThereAreNoMovies(@Nullable Bundle savedInstanceState) {
+        if(savedInstanceState.getParcelableArrayList(MOVIES) != null) {
+            mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
+            setupAdapter(mMovies);
+        } else {
+            updateUI();
+        }
+    }
+
+    private void updateUI() {
+        if(isOnline()) {
+            Call<Response> call = makeCallToGetDefaultMovieList();
+            showMovies(call);
+        } else {
+            Toast.makeText(getContext(), R.string.no_network_connection, Toast.LENGTH_SHORT)
+                    .show();
+        }
     }
 
     public boolean isOnline() {
