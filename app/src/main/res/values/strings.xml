@@ -7,4 +7,6 @@
     <string name="most_popular_movies">Most popular movies</string>
     <string name="top_rated_movies">Top rated movies</string>
     <string name="movie_details_toolbar">Movie Details</string>
+    <string name="no_network_connection">No network connection</string>
+    <string name="could_not_load_movies">Could not load the movies</string>
 </resources>

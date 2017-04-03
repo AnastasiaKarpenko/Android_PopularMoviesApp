@@ -1,5 +1,8 @@
 package ws.tilda.anastasia.popularmovies.view.movie_grid;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -65,8 +68,13 @@ public class MovieGridFragment extends Fragment {
             mMovies = savedInstanceState.getParcelableArrayList(MOVIES);
             setupAdapter(mMovies);
         } else {
-            Call<Response> call = makeCallToGetDefaultMovieList();
-            showMovies(call);
+            if(isOnline()) {
+                Call<Response> call = makeCallToGetDefaultMovieList();
+                showMovies(call);
+            } else {
+                Toast.makeText(getContext(), R.string.no_network_connection, Toast.LENGTH_SHORT)
+                        .show();
+            }
         }
 
         return v;
@@ -108,6 +116,13 @@ public class MovieGridFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
+    }
+
     private Call<Response> makeCallToGetDefaultMovieList() {
         return MovieApi.provideMovieService().getDefaultMovieList();
     }
@@ -131,7 +146,7 @@ public class MovieGridFragment extends Fragment {
 
             @Override
             public void onFailure(Call<Response> call, Throwable t) {
-                Toast.makeText(getContext(), "Error received", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), R.string.could_not_load_movies, Toast.LENGTH_SHORT).show();
             }
         });
     }
