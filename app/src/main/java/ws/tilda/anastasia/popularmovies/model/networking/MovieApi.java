@@ -10,7 +10,7 @@ import retrofit2.http.Path;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Response;
 
 public class MovieApi {
-    private static final String APIKEY = "putYourApiKey";
+    private static final String APIKEY = "PUT_YOUR_API_KEY";
     private static final String APIPATH = "https://api.themoviedb.org/3/";
     private static OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder();
 
