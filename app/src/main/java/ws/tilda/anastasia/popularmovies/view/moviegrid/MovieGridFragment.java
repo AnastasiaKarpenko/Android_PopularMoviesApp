@@ -125,7 +125,7 @@ public class MovieGridFragment extends Fragment {
     }
 
     private void updateUI() {
-        if(isOnline()) {
+        if(PopularMovies.hasNetwork()) {
             Call<MovieResponse> call = makeCallToGetDefaultMovieList();
             showMovies(call);
         } else {
@@ -140,13 +140,6 @@ public class MovieGridFragment extends Fragment {
 
     private Call<MovieResponse> makeCallToGetMoviesSortedBy(String string) {
         return MovieApi.provideMovieService().sortMoviesByCriteria(string);
-    }
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     private void showMovies(Call<MovieResponse> call) {

@@ -8,6 +8,7 @@ import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Call;
@@ -21,7 +22,7 @@ import ws.tilda.anastasia.popularmovies.model.modelobjects.MovieResponse;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResponse;
 
 public class MovieApi {
-    private static final String APIKEY = "PutYourApiKey";
+    private static final String APIKEY = "PutYourApiKeyHere";
     private static final String APIPATH = "https://api.themoviedb.org/3/";
     private static final String CACHE_CONTROL = "Cache-Control";
 
@@ -35,6 +36,7 @@ public class MovieApi {
 
     private static OkHttpClient provideOkHttpClient() {
         return okhttpClientBuilder
+                .addInterceptor(provideOfflineCacheInterceptor())
                 .cache(provideCache())
                 .addNetworkInterceptor(provideCacheInterceptor())
                 .build();
@@ -78,6 +80,27 @@ public class MovieApi {
                 return response.newBuilder()
                         .header(CACHE_CONTROL, cacheControl.toString())
                         .build();
+            }
+        };
+    }
+
+    public static Interceptor provideOfflineCacheInterceptor() {
+        return new Interceptor() {
+            @Override
+            public Response intercept(Chain chain) throws IOException {
+                Request request = chain.request();
+
+                if (!PopularMovies.hasNetwork()) {
+                    CacheControl cacheControl = new CacheControl.Builder()
+                            .maxStale(7, TimeUnit.DAYS)
+                            .build();
+
+                    request = request.newBuilder()
+                            .cacheControl(cacheControl)
+                            .build();
+                }
+
+                return chain.proceed(request);
             }
         };
     }

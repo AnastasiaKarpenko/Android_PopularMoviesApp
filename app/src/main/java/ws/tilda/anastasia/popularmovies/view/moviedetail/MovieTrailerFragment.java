@@ -126,7 +126,7 @@ public class MovieTrailerFragment extends Fragment {
     }
 
     private void updateUI() {
-        if (isOnline()) {
+        if (PopularMovies.hasNetwork()) {
             Call<TrailerResponse> call = makeCallToFetchTrailers(mMovieId);
             showTrailers(call);
         } else {
@@ -137,13 +137,6 @@ public class MovieTrailerFragment extends Fragment {
 
     private Call<TrailerResponse> makeCallToFetchTrailers(int movieId) {
         return MovieApi.provideMovieService().fetchTrailersByMovieId(movieId);
-    }
-
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     private void showTrailers(Call<TrailerResponse> call) {
