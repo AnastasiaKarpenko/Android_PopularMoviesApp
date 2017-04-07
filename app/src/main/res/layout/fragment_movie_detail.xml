@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
             xmlns:app="http://schemas.android.com/apk/res-auto"
             xmlns:tools="http://schemas.android.com/tools"
             android:layout_width="match_parent"
@@ -11,7 +11,7 @@
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context="ws.tilda.anastasia.popularmovies.view.moviedetail.MovieDetailActivity">
+        tools:context="ws.tilda.anastasia.popularmovies.view.moviedetail.MovieDetailTabbedActivity$MovieDetailFragment">
 
         <TextView
             android:id="@+id/detail_movie_title"
@@ -26,8 +26,7 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="Movie Title"
-            />
+            tools:text="Movie Title"/>
 
         <ImageView
             android:id="@+id/detail_movie_poster"
@@ -104,4 +103,4 @@
     </android.support.constraint.ConstraintLayout>
 
 
-</ScrollView>
+</android.support.v4.widget.NestedScrollView>

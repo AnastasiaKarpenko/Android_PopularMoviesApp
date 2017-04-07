@@ -8,9 +8,10 @@ import retrofit2.converter.gson.GsonConverterFactory;
 import retrofit2.http.GET;
 import retrofit2.http.Path;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Response;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResults;
 
 public class MovieApi {
-    private static final String APIKEY = "PUT_YOUR_API_KEY";
+    private static final String APIKEY = "PutYourApiKeyHere";
     private static final String APIPATH = "https://api.themoviedb.org/3/";
     private static OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder();
 
@@ -39,6 +40,12 @@ public class MovieApi {
 
         @GET("movie/{criteria}?api_key=" + APIKEY)
         Call<Response> sortMoviesByCriteria(@Path ("criteria") String string);
+
+        @GET("movie/{id}/videos?api_key=" + APIKEY)
+        Call<TrailerResults> fetchTrailersByMovieId(@Path ("id") int id);
+
+        @GET("movie/{id}/reviews?api_key=" + APIKEY)
+        Call<Response> fetchReviewsByMovieId(@Path ("id") int id);
     }
 
 }
