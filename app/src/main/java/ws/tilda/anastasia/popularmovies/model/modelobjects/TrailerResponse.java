@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class TrailerResults implements Parcelable {
+public class TrailerResponse implements Parcelable {
 
     @SerializedName("id")
     @Expose
@@ -44,23 +44,23 @@ public class TrailerResults implements Parcelable {
         dest.writeTypedList(this.trailers);
     }
 
-    public TrailerResults() {
+    public TrailerResponse() {
     }
 
-    protected TrailerResults(Parcel in) {
+    protected TrailerResponse(Parcel in) {
         this.id = (Integer) in.readValue(Integer.class.getClassLoader());
         this.trailers = in.createTypedArrayList(Trailer.CREATOR);
     }
 
-    public static final Parcelable.Creator<TrailerResults> CREATOR = new Parcelable.Creator<TrailerResults>() {
+    public static final Parcelable.Creator<TrailerResponse> CREATOR = new Parcelable.Creator<TrailerResponse>() {
         @Override
-        public TrailerResults createFromParcel(Parcel source) {
-            return new TrailerResults(source);
+        public TrailerResponse createFromParcel(Parcel source) {
+            return new TrailerResponse(source);
         }
 
         @Override
-        public TrailerResults[] newArray(int size) {
-            return new TrailerResults[size];
+        public TrailerResponse[] newArray(int size) {
+            return new TrailerResponse[size];
         }
     };
 }

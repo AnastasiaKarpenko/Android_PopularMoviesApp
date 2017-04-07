@@ -8,7 +8,7 @@ import java.util.List;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Response implements Parcelable {
+public class MovieResponse implements Parcelable {
 
     @SerializedName("page")
     @Expose
@@ -68,25 +68,25 @@ public class Response implements Parcelable {
         dest.writeValue(this.totalPages);
     }
 
-    public Response() {
+    public MovieResponse() {
     }
 
-    protected Response(Parcel in) {
+    protected MovieResponse(Parcel in) {
         this.page = (Integer) in.readValue(Integer.class.getClassLoader());
         this.mMovies = in.createTypedArrayList(Movie.CREATOR);
         this.totalResults = (Integer) in.readValue(Integer.class.getClassLoader());
         this.totalPages = (Integer) in.readValue(Integer.class.getClassLoader());
     }
 
-    public static final Parcelable.Creator<Response> CREATOR = new Parcelable.Creator<Response>() {
+    public static final Parcelable.Creator<MovieResponse> CREATOR = new Parcelable.Creator<MovieResponse>() {
         @Override
-        public Response createFromParcel(Parcel source) {
-            return new Response(source);
+        public MovieResponse createFromParcel(Parcel source) {
+            return new MovieResponse(source);
         }
 
         @Override
-        public Response[] newArray(int size) {
-            return new Response[size];
+        public MovieResponse[] newArray(int size) {
+            return new MovieResponse[size];
         }
     };
 }

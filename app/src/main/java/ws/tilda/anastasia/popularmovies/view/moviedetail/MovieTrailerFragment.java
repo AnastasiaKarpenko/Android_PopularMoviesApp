@@ -23,7 +23,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Trailer;
-import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResults;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResponse;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
 
@@ -42,6 +42,7 @@ public class MovieTrailerFragment extends Fragment {
     Unbinder unbinder;
 
     public MovieTrailerFragment() {
+        //default constructor
     }
 
     public static MovieTrailerFragment newInstance(int movieId) {
@@ -104,11 +105,6 @@ public class MovieTrailerFragment extends Fragment {
         mListener = null;
     }
 
-
-    public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Trailer trailer);
-    }
-
     @Override
     public void onSaveInstanceState(Bundle outState) {
         outState.putParcelableArrayList(TRAILERS, (ArrayList<? extends Parcelable>) mTrailers);
@@ -127,7 +123,7 @@ public class MovieTrailerFragment extends Fragment {
 
     private void updateUI() {
         if (isOnline()) {
-            Call<TrailerResults> call = makeCallToFetchTrailers(mMovieId);
+            Call<TrailerResponse> call = makeCallToFetchTrailers(mMovieId);
             showTrailers(call);
         } else {
             Toast.makeText(getContext(), R.string.no_network_connection, Toast.LENGTH_SHORT)
@@ -142,14 +138,18 @@ public class MovieTrailerFragment extends Fragment {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    private Call<TrailerResults> makeCallToFetchTrailers(int movieId) {
+    interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(Trailer trailer);
+    }
+
+    private Call<TrailerResponse> makeCallToFetchTrailers(int movieId) {
         return MovieApi.provideMovieService().fetchTrailersByMovieId(movieId);
     }
 
-    private void showTrailers(Call<TrailerResults> call) {
-        call.enqueue(new Callback<TrailerResults>() {
+    private void showTrailers(Call<TrailerResponse> call) {
+        call.enqueue(new Callback<TrailerResponse>() {
             @Override
-            public void onResponse(Call<TrailerResults> call, retrofit2.Response<TrailerResults> response) {
+            public void onResponse(Call<TrailerResponse> call, retrofit2.Response<TrailerResponse> response) {
                 if (response.isSuccessful()) {
                     mTrailers = response.body().getTrailers();
                 }
@@ -160,7 +160,7 @@ public class MovieTrailerFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<TrailerResults> call, Throwable t) {
+            public void onFailure(Call<TrailerResponse> call, Throwable t) {
                 Toast.makeText(getContext(), R.string.could_not_load_trailers, Toast.LENGTH_SHORT)
                         .show();
             }

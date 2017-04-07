@@ -28,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
-import ws.tilda.anastasia.popularmovies.model.modelobjects.Response;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.MovieResponse;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
 
@@ -91,7 +91,7 @@ public class MovieGridFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.most_popular:
-                Call<Response> call = makeCallToGetMoviesSortedBy(POPULAR);
+                Call<MovieResponse> call = makeCallToGetMoviesSortedBy(POPULAR);
                 showMovies(call);
                 Toast.makeText(getContext(), R.string.most_popular_movies, Toast.LENGTH_SHORT).show();
                 return true;
@@ -123,7 +123,7 @@ public class MovieGridFragment extends Fragment {
 
     private void updateUI() {
         if(isOnline()) {
-            Call<Response> call = makeCallToGetDefaultMovieList();
+            Call<MovieResponse> call = makeCallToGetDefaultMovieList();
             showMovies(call);
         } else {
             Toast.makeText(getContext(), R.string.no_network_connection, Toast.LENGTH_SHORT)
@@ -138,18 +138,18 @@ public class MovieGridFragment extends Fragment {
         return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
-    private Call<Response> makeCallToGetDefaultMovieList() {
+    private Call<MovieResponse> makeCallToGetDefaultMovieList() {
         return MovieApi.provideMovieService().getDefaultMovieList();
     }
 
-    private Call<Response> makeCallToGetMoviesSortedBy(String string) {
+    private Call<MovieResponse> makeCallToGetMoviesSortedBy(String string) {
         return MovieApi.provideMovieService().sortMoviesByCriteria(string);
     }
 
-    private void showMovies(Call<Response> call) {
-        call.enqueue(new Callback<Response>() {
+    private void showMovies(Call<MovieResponse> call) {
+        call.enqueue(new Callback<MovieResponse>() {
             @Override
-            public void onResponse(Call<Response> call, retrofit2.Response<Response> response) {
+            public void onResponse(Call<MovieResponse> call, retrofit2.Response<MovieResponse> response) {
                 if (response.isSuccessful()) {
                     mMovies = response.body().getMovies();
                 }
@@ -160,7 +160,7 @@ public class MovieGridFragment extends Fragment {
             }
 
             @Override
-            public void onFailure(Call<Response> call, Throwable t) {
+            public void onFailure(Call<MovieResponse> call, Throwable t) {
                 Toast.makeText(getContext(), R.string.could_not_load_movies, Toast.LENGTH_SHORT).show();
             }
         });
