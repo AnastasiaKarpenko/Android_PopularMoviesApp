@@ -26,10 +26,13 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
+import ws.tilda.anastasia.popularmovies.PopularMovies;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.MovieResponse;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
+
+import static ws.tilda.anastasia.popularmovies.PopularMovies.hasNetwork;
 
 
 public class MovieGridFragment extends Fragment {
@@ -131,19 +134,19 @@ public class MovieGridFragment extends Fragment {
         }
     }
 
-    public boolean isOnline() {
-        ConnectivityManager cm =
-                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
-        NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
     private Call<MovieResponse> makeCallToGetDefaultMovieList() {
         return MovieApi.provideMovieService().getDefaultMovieList();
     }
 
     private Call<MovieResponse> makeCallToGetMoviesSortedBy(String string) {
         return MovieApi.provideMovieService().sortMoviesByCriteria(string);
+    }
+
+    public boolean isOnline() {
+        ConnectivityManager cm =
+                (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+        NetworkInfo netInfo = cm.getActiveNetworkInfo();
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     private void showMovies(Call<MovieResponse> call) {

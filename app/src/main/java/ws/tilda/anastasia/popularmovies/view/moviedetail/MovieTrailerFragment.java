@@ -21,6 +21,7 @@ import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import retrofit2.Call;
 import retrofit2.Callback;
+import ws.tilda.anastasia.popularmovies.PopularMovies;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Trailer;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResponse;
@@ -111,6 +112,9 @@ public class MovieTrailerFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
+    interface OnListFragmentInteractionListener {
+        void onListFragmentInteraction(Trailer trailer);
+    }
 
     private void reloadIfThereAreNoTrailers(@Nullable Bundle savedInstanceState) {
         if (savedInstanceState.getParcelableArrayList(TRAILERS) == null) {
@@ -131,19 +135,15 @@ public class MovieTrailerFragment extends Fragment {
         }
     }
 
+    private Call<TrailerResponse> makeCallToFetchTrailers(int movieId) {
+        return MovieApi.provideMovieService().fetchTrailersByMovieId(movieId);
+    }
+
     public boolean isOnline() {
         ConnectivityManager cm =
                 (ConnectivityManager) getContext().getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
         return netInfo != null && netInfo.isConnectedOrConnecting();
-    }
-
-    interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Trailer trailer);
-    }
-
-    private Call<TrailerResponse> makeCallToFetchTrailers(int movieId) {
-        return MovieApi.provideMovieService().fetchTrailersByMovieId(movieId);
     }
 
     private void showTrailers(Call<TrailerResponse> call) {
