@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.trailers;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -41,7 +41,7 @@ public class MovieTrailerFragment extends Fragment {
     Unbinder unbinder;
 
     public MovieTrailerFragment() {
-        //default constructor
+
     }
 
     public static MovieTrailerFragment newInstance(int movieId) {
@@ -110,7 +110,7 @@ public class MovieTrailerFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    interface OnListFragmentInteractionListener {
+    public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Trailer trailer);
     }
 

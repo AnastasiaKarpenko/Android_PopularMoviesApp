@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.reviews;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -25,12 +25,6 @@ import ws.tilda.anastasia.popularmovies.model.modelobjects.Review;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.ReviewResponse;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
 public class MovieReviewFragment extends Fragment {
 
     private static final String MOVIE_ID = "movie_id";
@@ -46,7 +40,7 @@ public class MovieReviewFragment extends Fragment {
     Unbinder unbinder;
 
     public MovieReviewFragment() {
-        //default constructor
+
     }
 
     public static MovieReviewFragment newInstance(int movieId) {
@@ -115,7 +109,7 @@ public class MovieReviewFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    interface OnListFragmentInteractionListener {
+    public interface OnListFragmentInteractionListener {
         void onListFragmentInteraction(Review review);
     }
 

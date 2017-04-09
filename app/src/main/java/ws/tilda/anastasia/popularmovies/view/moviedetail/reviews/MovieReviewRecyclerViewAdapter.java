@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.reviews;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -10,7 +10,6 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Review;
-import ws.tilda.anastasia.popularmovies.view.moviedetail.MovieReviewFragment.OnListFragmentInteractionListener;
 
 import java.util.List;
 
@@ -19,9 +18,10 @@ public class MovieReviewRecyclerViewAdapter extends RecyclerView
         .Adapter<MovieReviewRecyclerViewAdapter.ViewHolder> {
 
     private final List<Review> mReviews;
-    private final OnListFragmentInteractionListener mListener;
+    private final MovieReviewFragment.OnListFragmentInteractionListener mListener;
 
-    public MovieReviewRecyclerViewAdapter(List<Review> reviews, OnListFragmentInteractionListener listener) {
+    public MovieReviewRecyclerViewAdapter(List<Review> reviews, MovieReviewFragment
+            .OnListFragmentInteractionListener listener) {
         mReviews = reviews;
         mListener = listener;
     }
@@ -50,11 +50,12 @@ public class MovieReviewRecyclerViewAdapter extends RecyclerView
     }
 
     @Override
-    public int getItemCount() {if (mReviews != null) {
-        return mReviews.size();
-    } else {
-        return 0;
-    }
+    public int getItemCount() {
+        if (mReviews != null) {
+            return mReviews.size();
+        } else {
+            return 0;
+        }
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {

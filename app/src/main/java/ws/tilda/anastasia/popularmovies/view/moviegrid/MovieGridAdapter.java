@@ -19,8 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
-import ws.tilda.anastasia.popularmovies.view.moviedetail.MovieDetailActivity;
-import ws.tilda.anastasia.popularmovies.view.moviedetail.MovieDetailTabbedActivity;
+import ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailactivity.MovieDetailTabbedActivity;
 
 
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MovieViewHolder> {
@@ -102,15 +101,9 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         }
     }
 
-    private void starMovieDetailActivity(View view, int index) {
-        Intent intent = new Intent(view.getContext(), MovieDetailActivity.class);
-        intent.putExtra(MovieDetailActivity.MOVIE, mMovies.get(index));
-        view.getContext().startActivity(intent);
-    }
-
     private void starMovieDetailTabbedActivity(View view, int index) {
         Intent intent = new Intent(view.getContext(), MovieDetailTabbedActivity.class);
-        intent.putExtra(MovieDetailActivity.MOVIE, mMovies.get(index));
+        intent.putExtra(MovieDetailTabbedActivity.MOVIE, mMovies.get(index));
         view.getContext().startActivity(intent);
     }
 

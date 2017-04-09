@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetails;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -52,17 +52,12 @@ public class MovieDetailFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState == null || !savedInstanceState.containsKey(MOVIE)) {
-            mMovie = new Movie();
-        } else {
-            mMovie = savedInstanceState.getParcelable(MOVIE);
-        }
     }
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-         mMovie = getArguments().getParcelable(MOVIE);
+        mMovie = getArguments().getParcelable(MOVIE);
     }
 
     @Nullable
@@ -71,6 +66,10 @@ public class MovieDetailFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_movie_detail, container, false);
         unbinder = ButterKnife.bind(this, v);
+
+        if (savedInstanceState != null && savedInstanceState.containsKey(MOVIE)) {
+            mMovie = savedInstanceState.getParcelable(MOVIE);
+        }
 
         updateUi(mMovie);
 
@@ -81,6 +80,11 @@ public class MovieDetailFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -101,10 +105,15 @@ public class MovieDetailFragment extends Fragment {
 
     private String formatReleaseDateString(String string) {
         String year = "";
-        for (int i = 0; i < NUMBER_DIGITS_YEAR; i++) {
-            year += string.charAt(i);
+
+        if (string == null) {
+            return "0";
+        } else {
+            for (int i = 0; i < NUMBER_DIGITS_YEAR; i++) {
+                year += string.charAt(i);
+            }
+            return year;
         }
-        return year;
 
     }
 

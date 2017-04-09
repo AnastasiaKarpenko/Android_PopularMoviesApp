@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.trailers;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,16 +12,15 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Trailer;
-import ws.tilda.anastasia.popularmovies.view.moviedetail.MovieTrailerFragment.OnListFragmentInteractionListener;
 
 public class MovieTrailerRecyclerViewAdapter
         extends RecyclerView.Adapter<MovieTrailerRecyclerViewAdapter.ViewHolder> {
 
     private final List<Trailer> mTrailers;
-    private final OnListFragmentInteractionListener mListener;
+    private final MovieTrailerFragment.OnListFragmentInteractionListener mListener;
 
     public MovieTrailerRecyclerViewAdapter(List<Trailer> trailers,
-                                           OnListFragmentInteractionListener listener) {
+                                           MovieTrailerFragment.OnListFragmentInteractionListener listener) {
         mTrailers = trailers;
         mListener = listener;
     }

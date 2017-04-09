@@ -1,13 +1,10 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailactivity;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -19,23 +16,20 @@ import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Review;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Trailer;
+import ws.tilda.anastasia.popularmovies.view.moviedetail.reviews.MovieReviewFragment;
+import ws.tilda.anastasia.popularmovies.view.moviedetail.trailers.MovieTrailerFragment;
 
 
 public class MovieDetailTabbedActivity extends AppCompatActivity
-        implements MovieTrailerFragment.OnListFragmentInteractionListener, MovieReviewFragment.OnListFragmentInteractionListener {
+        implements MovieTrailerFragment.OnListFragmentInteractionListener,
+        MovieReviewFragment.OnListFragmentInteractionListener {
+
     public static final String MOVIE = "movie";
 
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     private ViewPager mViewPager;
+    private Movie mMovie;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,12 +37,14 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
         getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_movie_detail_tabbed);
 
+        mMovie = getIntent().getParcelableExtra(MOVIE);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle(R.string.movie_details_toolbar);
 
-        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
+        mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager(), mMovie);
 
         mViewPager = (ViewPager) findViewById(R.id.container);
         mViewPager.setAdapter(mSectionsPagerAdapter);
@@ -62,8 +58,6 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.menu_movie_detail_tabbed, menu);
         return true;
     }
 
@@ -110,49 +104,4 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
 //        });
 //    }
 
-
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    private class SectionsPagerAdapter extends FragmentPagerAdapter {
-
-        SectionsPagerAdapter(FragmentManager fm) {
-            super(fm);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            Movie movie = getIntent()
-                    .getParcelableExtra(MOVIE);
-            switch (position) {
-                case 0:
-                    return MovieDetailFragment.newInstance(movie);
-                case 1:
-                    return MovieTrailerFragment.newInstance(movie.getId());
-                case 2:
-                    return MovieReviewFragment.newInstance(movie.getId());
-            }
-            return MovieDetailFragment.newInstance(movie);
-        }
-
-        @Override
-        public int getCount() {
-            // Show 3 total pages.
-            return 3;
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            switch (position) {
-                case 0:
-                    return "OVERVIEW";
-                case 1:
-                    return "TRAILERS";
-                case 2:
-                    return "REVIEWS";
-            }
-            return null;
-        }
-    }
 }

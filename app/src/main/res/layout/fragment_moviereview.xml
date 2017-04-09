@@ -10,5 +10,5 @@
     android:layout_marginLeft="@dimen/activity_horizontal_margin"
     android:layout_marginRight="@dimen/activity_horizontal_margin"
     app:layoutManager="LinearLayoutManager"
-    tools:context="ws.tilda.anastasia.popularmovies.view.moviedetail.MovieReviewFragment"
+    tools:context="ws.tilda.anastasia.popularmovies.view.moviedetail.reviews.MovieReviewFragment"
     tools:listitem="@layout/fragment_moviereview_list_item"/>

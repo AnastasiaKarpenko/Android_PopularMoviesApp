@@ -20,10 +20,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.moviedetail.MovieDetailActivity">
-        </activity>
         <activity
-            android:name=".view.moviedetail.MovieDetailTabbedActivity"
+            android:name=".view.moviedetail.moviedetailactivity.MovieDetailTabbedActivity"
             android:label="@string/title_activity_movie_detail_tabbed"
             android:parentActivityName=".view.moviegrid.MovieGridActivity"
             android:theme="@style/AppTheme.NoActionBar">
