@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailactivity;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailtabs;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

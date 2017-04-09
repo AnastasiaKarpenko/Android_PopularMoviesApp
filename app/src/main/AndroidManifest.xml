@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.moviedetail.moviedetailactivity.MovieDetailTabbedActivity"
+            android:name=".view.moviedetail.moviedetailtabs.MovieDetailTabbedActivity"
             android:label="@string/title_activity_movie_detail_tabbed"
             android:parentActivityName=".view.moviegrid.MovieGridActivity"
             android:theme="@style/AppTheme.NoActionBar">

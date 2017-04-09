@@ -19,7 +19,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
-import ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailactivity.MovieDetailTabbedActivity;
+import ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailtabs.MovieDetailTabbedActivity;
 
 
 public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.MovieViewHolder> {

@@ -1,4 +1,4 @@
-package ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailactivity;
+package ws.tilda.anastasia.popularmovies.view.moviedetail.moviedetailtabs;
 
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
