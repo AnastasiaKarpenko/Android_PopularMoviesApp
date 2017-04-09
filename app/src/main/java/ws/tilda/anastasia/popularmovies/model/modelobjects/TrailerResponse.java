@@ -1,4 +1,3 @@
-
 package ws.tilda.anastasia.popularmovies.model.modelobjects;
 
 import android.os.Parcel;

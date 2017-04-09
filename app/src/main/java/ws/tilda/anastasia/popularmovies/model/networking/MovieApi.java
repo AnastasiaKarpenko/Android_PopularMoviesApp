@@ -19,10 +19,11 @@ import retrofit2.http.Path;
 import timber.log.Timber;
 import ws.tilda.anastasia.popularmovies.PopularMovies;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.MovieResponse;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.ReviewResponse;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResponse;
 
 public class MovieApi {
-    private static final String APIKEY = "PutYourApiKeyHere";
+    private static final String APIKEY = "putYourApiKey";
     private static final String APIPATH = "https://api.themoviedb.org/3/";
     private static final String CACHE_CONTROL = "Cache-Control";
 
@@ -116,7 +117,7 @@ public class MovieApi {
         Call<TrailerResponse> fetchTrailersByMovieId(@Path("id") int id);
 
         @GET("movie/{id}/reviews?api_key=" + APIKEY)
-        Call<MovieResponse> fetchReviewsByMovieId(@Path("id") int id);
+        Call<ReviewResponse> fetchReviewsByMovieId(@Path("id") int id);
     }
 
 }

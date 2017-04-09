@@ -13,16 +13,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
 
 import ws.tilda.anastasia.popularmovies.R;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Review;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Trailer;
-
-import static android.R.attr.id;
 
 
 public class MovieDetailTabbedActivity extends AppCompatActivity
-        implements MovieTrailerFragment.OnListFragmentInteractionListener{
+        implements MovieTrailerFragment.OnListFragmentInteractionListener, MovieReviewFragment.OnListFragmentInteractionListener {
     public static final String MOVIE = "movie";
 
     /**
@@ -40,6 +40,7 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_movie_detail_tabbed);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -93,6 +94,11 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
         }
     }
 
+    @Override
+    public void onListFragmentInteraction(Review review) {
+
+    }
+
 //    private void setFloatingButton() {
 //        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
 //        fab.setOnClickListener(new View.OnClickListener() {
@@ -124,8 +130,8 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
                     return MovieDetailFragment.newInstance(movie);
                 case 1:
                     return MovieTrailerFragment.newInstance(movie.getId());
-//                case 2:
-//                    return MovieTrailerFragment.newInstance(2);
+                case 2:
+                    return MovieReviewFragment.newInstance(movie.getId());
             }
             return MovieDetailFragment.newInstance(movie);
         }
@@ -133,7 +139,7 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override

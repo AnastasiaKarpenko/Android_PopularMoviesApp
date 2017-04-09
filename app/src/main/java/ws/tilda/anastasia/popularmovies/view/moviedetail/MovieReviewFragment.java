@@ -21,31 +21,36 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import ws.tilda.anastasia.popularmovies.PopularMovies;
 import ws.tilda.anastasia.popularmovies.R;
-import ws.tilda.anastasia.popularmovies.model.modelobjects.Trailer;
-import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResponse;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.Review;
+import ws.tilda.anastasia.popularmovies.model.modelobjects.ReviewResponse;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
-
-public class MovieTrailerFragment extends Fragment {
+/**
+ * A fragment representing a list of Items.
+ * <p/>
+ * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
+ * interface.
+ */
+public class MovieReviewFragment extends Fragment {
 
     private static final String MOVIE_ID = "movie_id";
-    private static final String TRAILERS = "trailers";
+    private static final String REVIEWS = "trailers";
 
     private OnListFragmentInteractionListener mListener;
-    private List<Trailer> mTrailers;
+    private List<Review> mReviews;
     private int mMovieId;
 
-    @BindView(R.id.trailer_list_recyclerView)
-    RecyclerView mTrailerRecyclerView;
+    @BindView(R.id.movie_review_recycler_view)
+    RecyclerView mReviewRecyclerView;
 
     Unbinder unbinder;
 
-    public MovieTrailerFragment() {
+    public MovieReviewFragment() {
         //default constructor
     }
 
-    public static MovieTrailerFragment newInstance(int movieId) {
-        MovieTrailerFragment fragment = new MovieTrailerFragment();
+    public static MovieReviewFragment newInstance(int movieId) {
+        MovieReviewFragment fragment = new MovieReviewFragment();
         Bundle args = new Bundle();
         args.putInt(MOVIE_ID, movieId);
         fragment.setArguments(args);
@@ -64,15 +69,15 @@ public class MovieTrailerFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_movietrailer_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_moviereview, container, false);
 
         unbinder = ButterKnife.bind(this, view);
 
-        mTrailerRecyclerView.addItemDecoration(new ws.tilda.anastasia.popularmovies.view.moviedetail
-                .utils.DividerItemDecoration(mTrailerRecyclerView.getContext()));
+        mReviewRecyclerView.addItemDecoration(new ws.tilda.anastasia.popularmovies.view.moviedetail
+                .utils.DividerItemDecoration(mReviewRecyclerView.getContext()));
 
         if (savedInstanceState != null) {
-            reloadIfThereAreNoTrailers(savedInstanceState);
+            reloadIfThereAreNoReviews(savedInstanceState);
         } else {
             updateUI();
         }
@@ -106,26 +111,26 @@ public class MovieTrailerFragment extends Fragment {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
-        outState.putParcelableArrayList(TRAILERS, (ArrayList<? extends Parcelable>) mTrailers);
+        outState.putParcelableArrayList(REVIEWS, (ArrayList<? extends Parcelable>) mReviews);
         super.onSaveInstanceState(outState);
     }
 
     interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(Trailer trailer);
+        void onListFragmentInteraction(Review review);
     }
 
-    private void reloadIfThereAreNoTrailers(@Nullable Bundle savedInstanceState) {
-        if (savedInstanceState.getParcelableArrayList(TRAILERS) == null) {
+    private void reloadIfThereAreNoReviews(@Nullable Bundle savedInstanceState) {
+        if (savedInstanceState.getParcelableArrayList(REVIEWS) == null) {
             updateUI();
         } else {
-            mTrailers = savedInstanceState.getParcelableArrayList(TRAILERS);
-            setupAdapter(mTrailers);
+            mReviews = savedInstanceState.getParcelableArrayList(REVIEWS);
+            setupAdapter(mReviews);
         }
     }
 
     private void updateUI() {
         if (PopularMovies.hasNetwork()) {
-            Call<TrailerResponse> call = makeCallToFetchTrailers(mMovieId);
+            Call<ReviewResponse> call = makeCallToFetchReviews(mMovieId);
             showTrailers(call);
         } else {
             Toast.makeText(getContext(), R.string.no_network_connection, Toast.LENGTH_SHORT)
@@ -133,35 +138,34 @@ public class MovieTrailerFragment extends Fragment {
         }
     }
 
-    private Call<TrailerResponse> makeCallToFetchTrailers(int movieId) {
-        return MovieApi.provideMovieService().fetchTrailersByMovieId(movieId);
+    private Call<ReviewResponse> makeCallToFetchReviews(int movieId) {
+        return MovieApi.provideMovieService().fetchReviewsByMovieId(movieId);
     }
 
-    private void showTrailers(Call<TrailerResponse> call) {
-        call.enqueue(new Callback<TrailerResponse>() {
+    private void showTrailers(Call<ReviewResponse> call) {
+        call.enqueue(new Callback<ReviewResponse>() {
             @Override
-            public void onResponse(Call<TrailerResponse> call, retrofit2.Response<TrailerResponse> response) {
+            public void onResponse(Call<ReviewResponse> call, retrofit2.Response<ReviewResponse> response) {
                 if (response.isSuccessful()) {
-                    mTrailers = response.body().getTrailers();
+                    mReviews = response.body().getReviews();
                 }
 
-                if (mTrailers != null) {
-                    setupAdapter(mTrailers);
+                if (mReviews != null) {
+                    setupAdapter(mReviews);
                 }
             }
 
             @Override
-            public void onFailure(Call<TrailerResponse> call, Throwable t) {
+            public void onFailure(Call<ReviewResponse> call, Throwable t) {
                 Toast.makeText(getContext(), R.string.could_not_load_trailers, Toast.LENGTH_SHORT)
                         .show();
             }
         });
     }
 
-    private void setupAdapter(List<Trailer> trailers) {
+    private void setupAdapter(List<Review> reviews) {
         if (isAdded()) {
-            mTrailerRecyclerView.setAdapter(new MovieTrailerRecyclerViewAdapter(trailers, mListener));
+            mReviewRecyclerView.setAdapter(new MovieReviewRecyclerViewAdapter(reviews, mListener));
         }
     }
 }
-
