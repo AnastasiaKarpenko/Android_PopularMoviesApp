@@ -29,14 +29,15 @@ public class MovieReviewRecyclerViewAdapter extends RecyclerView
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.fragment_moviereview_list_item, parent, false);
+                .inflate(R.layout.item_moviereview_list, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mReview = mReviews.get(position);
-        holder.mReviewAuthor.setText(holder.mReview.getAuthor());
+        holder.mReviewAuthor.setText("Review by: " + holder.mReview.getAuthor());
+        holder.mReviewId.setText(holder.mReview.getId());
         holder.mReviewContent.setText(holder.mReview.getContent());
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
@@ -61,6 +62,8 @@ public class MovieReviewRecyclerViewAdapter extends RecyclerView
     public class ViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.review_author)
         TextView mReviewAuthor;
+        @BindView(R.id.review_id)
+        TextView mReviewId;
         @BindView(R.id.review_content)
         TextView mReviewContent;
 

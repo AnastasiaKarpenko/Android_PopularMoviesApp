@@ -23,9 +23,12 @@ import ws.tilda.anastasia.popularmovies.model.modelobjects.ReviewResponse;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResponse;
 
 public class MovieApi {
-    private static final String APIKEY = "PutYourOwnApiKey";
+    private static final String APIKEY = "putYourKeyHere";
     private static final String APIPATH = "https://api.themoviedb.org/3/";
     private static final String CACHE_CONTROL = "Cache-Control";
+
+    public static final int NUMBER_MEGABYTES = 10;
+    public static final int NUMBER_BYTES = 1024;
 
     private static OkHttpClient.Builder okhttpClientBuilder = new OkHttpClient.Builder();
 
@@ -61,7 +64,7 @@ public class MovieApi {
         Cache cache = null;
         try {
             cache = new Cache(new File(PopularMovies.getInstance().getCacheDir(), "http-cache"),
-                    10 * 1024 * 1024); // 10 MB
+                    NUMBER_MEGABYTES * NUMBER_BYTES * NUMBER_BYTES); // 10 MB
         } catch (Exception e) {
             Timber.e(e, "Could not create Cache!");
         }

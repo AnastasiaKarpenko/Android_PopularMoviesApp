@@ -13,4 +13,7 @@
     <string name="action_settings">Settings</string>
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="could_not_load_trailers">Could not load the trailers</string>
+    <string name="could_not_load_reviews">Could not load the reviews</string>
+    <string name="no_review_passed_error">Sorry, there was no review passed</string>
+    <string name="error_loading_webpage">Error in loading webpage</string>
 </resources>

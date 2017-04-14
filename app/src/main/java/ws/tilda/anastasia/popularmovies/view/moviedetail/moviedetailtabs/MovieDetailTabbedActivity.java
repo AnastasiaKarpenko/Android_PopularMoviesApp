@@ -17,6 +17,7 @@ import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Review;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Trailer;
 import ws.tilda.anastasia.popularmovies.view.moviedetail.reviews.MovieReviewFragment;
+import ws.tilda.anastasia.popularmovies.view.moviedetail.reviews.ReviewDetailsActivity;
 import ws.tilda.anastasia.popularmovies.view.moviedetail.trailers.MovieTrailerFragment;
 
 
@@ -25,6 +26,7 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
         MovieReviewFragment.OnListFragmentInteractionListener {
 
     public static final String MOVIE = "movie";
+    public static final String REVIEW_EXTRA = "review";
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
     private ViewPager mViewPager;
@@ -90,6 +92,9 @@ public class MovieDetailTabbedActivity extends AppCompatActivity
 
     @Override
     public void onListFragmentInteraction(Review review) {
+        Bundle bundle = new Bundle();
+        bundle.putParcelable(REVIEW_EXTRA, review);
+        ReviewDetailsActivity.launch(this, review);
 
     }
 

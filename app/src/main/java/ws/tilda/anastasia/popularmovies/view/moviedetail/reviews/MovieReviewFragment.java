@@ -4,7 +4,9 @@ import android.content.Context;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,6 +38,8 @@ public class MovieReviewFragment extends Fragment {
 
     @BindView(R.id.movie_review_recycler_view)
     RecyclerView mReviewRecyclerView;
+    @BindView(R.id.fragment_movie_review)
+    CoordinatorLayout mCoordinatorLayout;
 
     Unbinder unbinder;
 
@@ -67,8 +71,8 @@ public class MovieReviewFragment extends Fragment {
 
         unbinder = ButterKnife.bind(this, view);
 
-        mReviewRecyclerView.addItemDecoration(new ws.tilda.anastasia.popularmovies.view.moviedetail
-                .utils.DividerItemDecoration(mReviewRecyclerView.getContext()));
+        mReviewRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
 
         if (savedInstanceState != null) {
             reloadIfThereAreNoReviews(savedInstanceState);
@@ -151,7 +155,7 @@ public class MovieReviewFragment extends Fragment {
 
             @Override
             public void onFailure(Call<ReviewResponse> call, Throwable t) {
-                Toast.makeText(getContext(), R.string.could_not_load_trailers, Toast.LENGTH_SHORT)
+                Toast.makeText(getContext(), R.string.could_not_load_reviews, Toast.LENGTH_SHORT)
                         .show();
             }
         });

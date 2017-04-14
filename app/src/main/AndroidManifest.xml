@@ -29,6 +29,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="ws.tilda.anastasia.popularmovies.view.moviegrid.MovieGridActivity"/>
         </activity>
+        <activity
+            android:name=".view.moviedetail.reviews.ReviewDetailsActivity"
+            android:parentActivityName=".view.moviedetail.moviedetailtabs.MovieDetailTabbedActivity">
+        </activity>
     </application>
 
 </manifest>
