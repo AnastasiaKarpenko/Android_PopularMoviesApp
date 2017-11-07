@@ -26,7 +26,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
 
     public static final int NUMBER_OF_VIEWS = 2;
     private List<Movie> mMovies;
-    private Context context;
+    private static Context context;
     private static final String IMAGE_PATH = "http://image.tmdb.org/t/p/w185/";
 
     public MovieGridAdapter(List<Movie> movies, Context context) {
@@ -65,7 +65,7 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         }
     }
 
-    public class MovieViewHolder extends RecyclerView.ViewHolder {
+    public static class MovieViewHolder extends RecyclerView.ViewHolder {
         @BindView(R.id.movie_poster)
         ImageView mMoviePosterImageView;
 
@@ -106,8 +106,6 @@ public class MovieGridAdapter extends RecyclerView.Adapter<MovieGridAdapter.Movi
         intent.putExtra(MovieDetailTabbedActivity.MOVIE, mMovies.get(index));
         view.getContext().startActivity(intent);
     }
-
-
 
 
 }

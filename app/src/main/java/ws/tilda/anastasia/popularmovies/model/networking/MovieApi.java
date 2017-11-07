@@ -23,7 +23,7 @@ import ws.tilda.anastasia.popularmovies.model.modelobjects.ReviewResponse;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.TrailerResponse;
 
 public class MovieApi {
-    private static final String APIKEY = "putYourKeyHere";
+    private static final String APIKEY = "49e055ea057d01a0f408b4e79838eea6";
     private static final String APIPATH = "https://api.themoviedb.org/3/";
     private static final String CACHE_CONTROL = "Cache-Control";
 

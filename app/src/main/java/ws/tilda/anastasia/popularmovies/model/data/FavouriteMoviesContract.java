@@ -2,7 +2,9 @@ package ws.tilda.anastasia.popularmovies.model.data;
 
 import android.provider.BaseColumns;
 
-public class FavouriteMoviesContract {
+public final class FavouriteMoviesContract {
+
+    private FavouriteMoviesContract() {}
 
     public static final class FavouriteMoviesEntry implements BaseColumns {
 

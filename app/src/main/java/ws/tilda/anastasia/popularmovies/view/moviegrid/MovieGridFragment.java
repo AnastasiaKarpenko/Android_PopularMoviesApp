@@ -1,8 +1,8 @@
 package ws.tilda.anastasia.popularmovies.view.moviegrid;
 
 import android.content.Context;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.annotation.Nullable;
@@ -28,11 +28,13 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import ws.tilda.anastasia.popularmovies.PopularMovies;
 import ws.tilda.anastasia.popularmovies.R;
+import ws.tilda.anastasia.popularmovies.model.data.FavouriteMoviesContract;
+import ws.tilda.anastasia.popularmovies.model.data.FavouriteMoviesDbHelper;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.Movie;
 import ws.tilda.anastasia.popularmovies.model.modelobjects.MovieResponse;
 import ws.tilda.anastasia.popularmovies.model.networking.MovieApi;
 
-import static ws.tilda.anastasia.popularmovies.PopularMovies.hasNetwork;
+import static ws.tilda.anastasia.popularmovies.model.data.FavouriteMoviesContract.*;
 
 
 public class MovieGridFragment extends Fragment {
@@ -43,9 +45,13 @@ public class MovieGridFragment extends Fragment {
     public static final int MIN_COLUMN_NUMBER = 2;
 
     private List<Movie> mMovies;
+    private SQLiteDatabase mDatabase;
+    private Cursor mCursor;
 
     @BindView(R.id.movie_recycler_view)
     RecyclerView mMovieRecyclerView;
+
+
 
     Unbinder unbinder;
 
@@ -74,14 +80,28 @@ public class MovieGridFragment extends Fragment {
         } else {
             updateUI();
         }
-
         return v;
     }
 
     @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        FavouriteMoviesDbHelper dbHelper = new FavouriteMoviesDbHelper(getActivity().getApplicationContext());
+        mDatabase = dbHelper.getWritableDatabase();
+//        mCursor = getFavouriteMovies();
+
+    }
+
+
+    @Override
     public void onDestroyView() {
-        super.onDestroyView();
+        mDatabase.close();
+
         unbinder.unbind();
+
+        super.onDestroyView();
+
     }
 
     @Override
@@ -103,6 +123,9 @@ public class MovieGridFragment extends Fragment {
                 showMovies(call);
                 Toast.makeText(getContext(), R.string.top_rated_movies, Toast.LENGTH_SHORT).show();
                 return true;
+//            case R.id.favourite_movies:
+//                setupFavMoviesAdapter(mCursor);
+//                Toast.makeText(getContext(), R.string.favourite_movies, Toast.LENGTH_SHORT).show();
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -179,4 +202,22 @@ public class MovieGridFragment extends Fragment {
             mMovieRecyclerView.setAdapter(new MovieGridAdapter(movies, getContext()));
         }
     }
+
+//    private void setupFavMoviesAdapter(Cursor cursor) {
+//        if (isAdded()) {
+//            mMovieRecyclerView.setAdapter(new FavouriteMoviesAdapter(getContext(), cursor));
+//        }
+//    }
+
+//    private Cursor getFavouriteMovies() {
+//        return mDatabase.query(FavouriteMoviesEntry.TABLE_NAME,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                null,
+//                FavouriteMoviesEntry.COLUMN_MOVIE_POSTER_PATH
+//        );
+//    }
 }
