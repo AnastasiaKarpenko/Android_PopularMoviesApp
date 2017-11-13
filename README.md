@@ -18,6 +18,7 @@ Android concepts that I learnt during working on this project:
 - Master pane layout,
 - Networking with Retrofit,
 - Data serialization with GSON,
+- Cunsuming the Movie DB API,
 - UI elements like ViewPagers, WebViews, RecyclerView,
 - Data persistence (SharedPreferences, SQLite database, Content Provider)
 
